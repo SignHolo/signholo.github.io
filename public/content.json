@@ -50,20 +50,12 @@
         "35": "m",
         "36": ".",
         "label": "Net Aliases",
-        "value": "Nemoid"
-      },
-      {
-        "label": "",
-        "value": "Holo"
-      },
-      {
-        "label": "",
-        "value": "Shiné"
+        "value": "Nemoid/Holo/Shiné"
       }
     ],
     "hobbies": [
       {
-        "name": "",
+        "name": "Questioning the meaning of life at 2 AM",
         "emoji": "☕"
       }
     ],
