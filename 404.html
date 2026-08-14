@@ -1,0 +1,10 @@
+<!-- GitHub Pages SPA redirect: any unknown deep link is parked here, then bounced to the app root, which restores the original path with replaceState (see index.html). Works for user pages and /repo/ project pages. -->
+<script>
+  sessionStorage.setItem('signholo.redirect', location.pathname + location.search)
+  var parts = location.pathname.split('/')
+  var base = '/'
+  if (parts.length > 2 && parts[1]) {
+    base = '/' + parts[1] + '/'
+  }
+  location.replace(base)
+</script>

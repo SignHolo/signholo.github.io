@@ -1,0 +1,56 @@
+.world {
+  position: relative;
+  overflow: hidden;
+}
+
+.blobWrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+
+.blobOne {
+  width: 44vw;
+  height: 44vw;
+  max-width: 34rem;
+  max-height: 34rem;
+  top: -8rem;
+  right: -6rem;
+  background: radial-gradient(circle at 30% 30%, rgba(146, 64, 14, 0.12), transparent 65%);
+  animation-duration: 22s;
+}
+
+.blobTwo {
+  width: 36vw;
+  height: 36vw;
+  max-width: 28rem;
+  max-height: 28rem;
+  top: 38%;
+  left: -10rem;
+  background: radial-gradient(circle at 60% 40%, rgba(216, 204, 184, 0.35), transparent 65%);
+  animation-duration: 17s;
+  animation-delay: -6s;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(3rem, 2rem) scale(1.12);
+  }
+}
+
+.world > *:not(.blobWrap) {
+  position: relative;
+  z-index: 1;
+}

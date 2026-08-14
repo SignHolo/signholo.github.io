@@ -1,0 +1,59 @@
+.btn {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 60;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--bg-2) 85%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  translate: 0 12px;
+  transition:
+    opacity 0.3s ease,
+    translate 0.3s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px -6px rgba(0, 0, 0, 0.2);
+}
+
+.show {
+  opacity: 1;
+  pointer-events: auto;
+  translate: 0 0;
+}
+
+.btn:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--accent) 35%, transparent);
+  translate: 0 -2px;
+}
+
+.btn:active {
+  translate: 0 0;
+}
+
+@media (max-width: 640px) {
+  .btn {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}

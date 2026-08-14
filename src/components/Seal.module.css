@@ -1,0 +1,29 @@
+.seal {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.iridescent {
+  color: var(--ink);
+  background: conic-gradient(
+    from 210deg,
+    var(--accent),
+    var(--accent-2),
+    var(--bg-2),
+    var(--accent)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(245, 168, 59, 0.35));
+  animation: shimmer 7s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(245, 168, 59, 0.25)) hue-rotate(0deg);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(229, 140, 166, 0.45)) hue-rotate(24deg);
+  }
+}
