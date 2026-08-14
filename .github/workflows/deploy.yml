@@ -29,7 +29,7 @@ jobs:
         run: |
           REPO="${{ github.event.repository.name }}"
           OWNER="${{ github.repository_owner }}"
-          if [ "$REPO" = "$OWNER.github.io" ]; then
+          if [ "${REPO,,}" = "${OWNER,,}.github.io" ]; then
             echo "base=/" >> "$GITHUB_OUTPUT"
           else
             echo "base=/$REPO/" >> "$GITHUB_OUTPUT"
