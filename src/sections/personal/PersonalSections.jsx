@@ -16,20 +16,15 @@ export default function PersonalSections() {
   const hobbiesReveal = useReveal()
   const musicReveal = useReveal()
 
-  // Default facts if empty to ensure rich layout
-  const defaultFacts = [
-    { label: "FAVORITE BREW", value: "Ethiopian Single Origin" },
-    { label: "CAMERA GEAR", value: "35mm Yashica FX-3" },
-    { label: "KEYBOARDS", value: "Custom Split Ortho 40%" },
-    { label: "WEEKEND PURSUIT", value: "Record Digging & Trail Runs" }
-  ]
-
-  const factItems = p.facts && p.facts.length >= 2
-    ? p.facts.slice(0, 4).map((fact) => ({
-        label: typeof fact === 'string' ? ["FAVORITE BREW", "CAMERA GEAR", "KEYBOARDS", "WEEKEND PURSUIT"][0] : fact.label,
-        value: typeof fact === 'string' ? fact : fact.value
+  const userFacts = (p.facts || []).filter((f) => f && (f.label || f.value))
+  const factItems = userFacts.length > 0
+    ? userFacts.map((fact) => ({
+        label: typeof fact === 'string' ? "NOTE" : (fact.label || ""),
+        value: typeof fact === 'string' ? fact : (fact.value || "")
       }))
-    : defaultFacts
+    : [
+        { label: "NET ALIASES", value: "Nemoid / Holo / Shiné" }
+      ]
 
   return (
     <>
@@ -39,7 +34,7 @@ export default function PersonalSections() {
           <div className={styles.heroLeft}>
             <div className={styles.heroBadge}>
               <span className={styles.sparkleIcon}>✦</span>
-              <span>{p.heroBadge || "EST. 1994 · LITERARY ZINE & LOG"}</span>
+              <span>{p.heroBadge || "PERSONAL LOG"}</span>
             </div>
 
             <h1 className={styles.heroTitle}>
@@ -47,7 +42,7 @@ export default function PersonalSections() {
             </h1>
 
             <p className={styles.heroTagline} aria-live="polite">
-              <span>{text || "Creating digital stories, beats, and thoughtful web tools."}</span>
+              <span>{text || (p.taglines && p.taglines.find((t) => t && t.trim())) || ""}</span>
               <span className={`${styles.caret} ${caret ? "" : styles.caretOff}`} aria-hidden="true">
                 |
               </span>
