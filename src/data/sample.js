@@ -7,7 +7,11 @@ export const DEFAULT_CONTENT = {
       "curating field notes on typography, music, & paper"
     ],
     heroBadge: "EST. 1994 · LITERARY ZINE & LOG",
-    bio: "I build interfaces that read like books and software that feels tactile. My work lives at the intersection of high-contrast typography, quiet engineering, and editorial web design.\n\nWhen I am not writing code or refining design systems, you can usually find me digging through dusty vinyl crates, compiling small-run zines, or exploring quiet corners of Surabaya with a 35mm film camera.",
+    bio: "I build interfaces that read like books and software that feels tactile. My work lives at the intersection of high-contrast typography, quiet engineering, and editorial web design.\n\nWhen I am not writing code or refining design systems, you can usually find me digging through dusty vinyl crates, compiling small-run zines, or exploring quiet corners with a camera.",
+    quote: {
+      text: "Simplicity is about subtracting the obvious and adding the meaningful.",
+      author: "John Maeda"
+    },
     avatarUrl: "",
     currentStatus: "☕ Drafting an essay on editorial typography & warm web aesthetics",
     location: "Surabaya, ID",

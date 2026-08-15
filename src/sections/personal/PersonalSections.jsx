@@ -13,8 +13,13 @@ export default function PersonalSections() {
   const [postModalOpen, setPostModalOpen] = useState(false)
 
   const aboutReveal = useReveal()
+  const quoteReveal = useReveal()
   const hobbiesReveal = useReveal()
   const musicReveal = useReveal()
+
+  const quoteData = typeof p.quote === "object" && p.quote !== null ? p.quote : {}
+  const quoteText = quoteData.text || p.quoteText || (typeof p.quote === "string" ? p.quote : "")
+  const quoteAuthor = quoteData.author || p.quoteAuthor || p.quoteSource || ""
 
   const userFacts = (p.facts || []).filter((f) => f && (f.label || f.value))
   const factItems = userFacts.length > 0
@@ -100,10 +105,9 @@ export default function PersonalSections() {
         </div>
 
         <div className={styles.aboutGrid}>
-          <div className={styles.quoteCard}>
-            <div className={styles.quoteMark}>“</div>
+          <div className={styles.bioCard}>
             <div className={styles.bioContent}>
-              {p.bio
+              {(p.bio || "Welcome to my personal corner.")
                 .split(/\n\s*\n/)
                 .filter(Boolean)
                 .map((para, i) => (
@@ -112,9 +116,9 @@ export default function PersonalSections() {
                   </p>
                 ))}
             </div>
-            <div className={styles.quoteFooter}>
-              <span className={styles.metaLabel}>LOCATION: <strong className={styles.metaValue}>{p.location || "Surabaya, ID"}</strong></span>
-              <span className={styles.metaLabel}>VIBE: <strong className={styles.metaValue}>{p.vibe || "Linen, Sepia & Analog"}</strong></span>
+            <div className={styles.bioFooter}>
+              <span className={styles.metaLabel}>LOCATION: <strong className={styles.metaValue}>{p.location || "Bekasi, ID"}</strong></span>
+              <span className={styles.metaLabel}>VIBE: <strong className={styles.metaValue}>{p.vibe || "BzzZzzzz"}</strong></span>
             </div>
           </div>
 
@@ -128,6 +132,29 @@ export default function PersonalSections() {
           </div>
         </div>
       </section>
+
+      {/* ── Quote ── */}
+      {quoteText ? (
+        <section ref={quoteReveal.ref} data-reveal={quoteReveal.revealed} className={styles.block}>
+          <div className={styles.sectionHeaderLine}>
+            <h2 className={styles.serifHeading}>Quote</h2>
+            <div className={styles.headerRule} />
+          </div>
+
+          <div className={styles.quoteCard}>
+            <div className={styles.quoteMark}>“</div>
+            <div className={styles.quoteBody}>
+              <p className={styles.quoteText}>{quoteText}</p>
+            </div>
+            {quoteAuthor ? (
+              <div className={styles.quoteAuthorRow}>
+                <span className={styles.quoteDash}>—</span>
+                <span className={styles.quoteAuthor}>{quoteAuthor}</span>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       {/* ── Hobbies ── */}
       <section ref={hobbiesReveal.ref} data-reveal={hobbiesReveal.revealed} className={styles.block}>
@@ -160,7 +187,7 @@ export default function PersonalSections() {
       <section ref={musicReveal.ref} data-reveal={musicReveal.revealed} className={styles.block}>
         <div className={styles.sectionHeaderLine}>
           <h2 className={styles.serifHeading}>
-            <span className={styles.musicHeadingIcon}>🎵</span> What I'm Listening To
+            <span className={styles.musicHeadingIcon}>🎵</span> On Repeat
           </h2>
           <div className={styles.headerRule} />
         </div>

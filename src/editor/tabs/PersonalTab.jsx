@@ -84,7 +84,39 @@ export default function PersonalTab() {
         </Field>
 
         <Field label="Bio" hint="Blank line = new paragraph">
-          <TextArea rows={6} value={p.bio || ""} onChange={(e) => patch({ bio: e.target.value })} />
+          <TextArea rows={5} value={p.bio || ""} onChange={(e) => patch({ bio: e.target.value })} />
+        </Field>
+      </SectionCard>
+
+      <SectionCard title="Quote Section">
+        <Field label="Quote text" hint="The main quotation text">
+          <TextArea
+            rows={3}
+            value={typeof p.quote === "object" ? p.quote?.text || "" : p.quoteText || (typeof p.quote === "string" ? p.quote : "")}
+            onChange={(e) =>
+              patch({
+                quote: {
+                  ...(typeof p.quote === "object" ? p.quote : {}),
+                  text: e.target.value
+                }
+              })
+            }
+            placeholder="Ah, I see it now. The feeling is like the color in a painting..."
+          />
+        </Field>
+        <Field label="Author / Source" hint="Author or attribution source for the quote">
+          <TextInput
+            value={typeof p.quote === "object" ? p.quote?.author || "" : p.quoteAuthor || p.quoteSource || ""}
+            onChange={(e) =>
+              patch({
+                quote: {
+                  ...(typeof p.quote === "object" ? p.quote : {}),
+                  author: e.target.value
+                }
+              })
+            }
+            placeholder="Dark Dream"
+          />
         </Field>
       </SectionCard>
 
