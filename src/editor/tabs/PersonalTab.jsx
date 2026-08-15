@@ -36,6 +36,17 @@ export default function PersonalTab() {
     })
   }
 
+  const rawQuotes = p.quotes || (p.quote ? [typeof p.quote === 'object' ? p.quote : { text: p.quote, author: p.quoteAuthor || "" }] : [])
+  const quotesList = Array.isArray(rawQuotes) ? rawQuotes : []
+
+  function patchQuote(i, patchObj) {
+    updateContent((prev) => {
+      const currentList = prev.personal.quotes || (prev.personal.quote ? [typeof prev.personal.quote === 'object' ? prev.personal.quote : { text: prev.personal.quote, author: prev.personal.quoteAuthor || "" }] : [])
+      const quotes = currentList.map((q, idx) => (idx === i ? { ...q, ...patchObj } : q))
+      return { ...prev, personal: { ...prev.personal, quotes } }
+    })
+  }
+
   function patchFact(i, patchObj) {
     updateContent((prev) => {
       const facts = prev.personal.facts.map((f, idx) => (idx === i ? { ...f, ...patchObj } : f))
@@ -88,36 +99,61 @@ export default function PersonalTab() {
         </Field>
       </SectionCard>
 
-      <SectionCard title="Quote Section">
-        <Field label="Quote text" hint="The main quotation text">
-          <TextArea
-            rows={3}
-            value={typeof p.quote === "object" ? p.quote?.text || "" : p.quoteText || (typeof p.quote === "string" ? p.quote : "")}
-            onChange={(e) =>
-              patch({
-                quote: {
-                  ...(typeof p.quote === "object" ? p.quote : {}),
-                  text: e.target.value
-                }
-              })
-            }
-            placeholder="Ah, I see it now. The feeling is like the color in a painting..."
-          />
-        </Field>
-        <Field label="Author / Source" hint="Author or attribution source for the quote">
-          <TextInput
-            value={typeof p.quote === "object" ? p.quote?.author || "" : p.quoteAuthor || p.quoteSource || ""}
-            onChange={(e) =>
-              patch({
-                quote: {
-                  ...(typeof p.quote === "object" ? p.quote : {}),
-                  author: e.target.value
-                }
-              })
-            }
-            placeholder="Dark Dream"
-          />
-        </Field>
+      <SectionCard title="Quotes">
+        <div className={styles.list}>
+          {quotesList.map((q, i) => (
+            <div key={i} className={styles.musicEditorBox}>
+              <Field label="Quote text">
+                <TextArea
+                  rows={3}
+                  value={q.text || ""}
+                  onChange={(e) => patchQuote(i, { text: e.target.value })}
+                  placeholder="Ah, I see it now. The feeling is like the color in a painting..."
+                />
+              </Field>
+              <div className={styles.row}>
+                <Field label="Author / Source">
+                  <TextInput
+                    value={q.author || ""}
+                    onChange={(e) => patchQuote(i, { author: e.target.value })}
+                    placeholder="-H or Author name"
+                  />
+                </Field>
+                <IconButton
+                  label="Delete quote"
+                  danger
+                  onClick={() =>
+                    updateContent((prev) => ({
+                      ...prev,
+                      personal: {
+                        ...prev.personal,
+                        quotes: quotesList.filter((_, idx) => idx !== i)
+                      }
+                    }))
+                  }
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4 7h16M9 7V5h6v2m-8 0l1 13h8l1-13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                </IconButton>
+              </div>
+            </div>
+          ))}
+          {quotesList.length === 0 && <p className={styles.hint}>No quotes added yet.</p>}
+        </div>
+        <AddButton
+          onClick={() =>
+            updateContent((prev) => ({
+              ...prev,
+              personal: {
+                ...prev.personal,
+                quotes: [...quotesList, { text: "", author: "" }]
+              }
+            }))
+          }
+        >
+          Add quote
+        </AddButton>
       </SectionCard>
 
       <SectionCard title="Quick Facts">

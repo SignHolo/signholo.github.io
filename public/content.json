@@ -8,16 +8,53 @@
       "",
       "- Dark Dream "
     ],
-    "bio": "I am an AI System Engineer and developer dedicated to building intelligent systems, automation logic, PLC programming, IoT, and embedded solutions. Driven by curiosity and a relentless pursuit of learning.",
-    "quote": {
-      "text": "Ah, I see it now. The feeling is like the color in a painting. Once it’s gone, all they’ve left behind is a rough sketch.",
-      "author": "Dark Dream"
-    },
-    "avatarUrl": "",
+    "bio": "I will ask GPT to fill this later :D",
+    "avatarUrl": "https://cdn.discordapp.com/attachments/858709077383053343/1538124207592972288/WhatsApp_Image_2022-10-11_at_3.54.47_PM.jpeg?ex=6a81894c&is=6a8037cc&hm=1f6786328106e66e4a8032275c5b1f6e86d188bfc647d1c56fb21e57b0a069d2",
     "facts": [
       {
+        "0": "r",
+        "1": "u",
+        "2": "n",
+        "3": "s",
+        "4": " ",
+        "5": "4",
+        "6": "0",
+        "7": "-",
+        "8": "p",
+        "9": "o",
+        "10": "i",
+        "11": "n",
+        "12": "t",
+        "13": " ",
+        "14": "t",
+        "15": "y",
+        "16": "p",
+        "17": "e",
+        "18": " ",
+        "19": "f",
+        "20": "o",
+        "21": "r",
+        "22": " ",
+        "23": "f",
+        "24": "u",
+        "25": "n",
+        "26": ",",
+        "27": " ",
+        "28": "a",
+        "29": "t",
+        "30": " ",
+        "31": "2",
+        "32": " ",
+        "33": "a",
+        "34": ".",
+        "35": "m",
+        "36": ".",
         "label": "Net Aliases",
         "value": "Nemoid/Holo/Shiné"
+      },
+      {
+        "label": "",
+        "value": ""
       }
     ],
     "hobbies": [
@@ -30,34 +67,92 @@
       {
         "artist": "ONE OK ROCK",
         "album": "The Beginning",
-        "coverUrl": ""
+        "coverUrl": "data:image/jpeg;base64,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",
+        "spotifyUrl": "https://open.spotify.com/embed/track/2vAuqfENmrnySgcKHAwsZJ?"
+      },
+      {
+        "artist": "League of Legends, Cailin Russo, Chrissy Costanza",
+        "album": "Phoenix",
+        "coverUrl": "https://i1.sndcdn.com/artworks-000609519082-ziy1oh-t1080x1080.jpg",
+        "genre": "Phoenix",
+        "spotifyUrl": "https://open.spotify.com/embed/track/1jsRo6lODprC33SNqTvLGz?"
       }
     ],
-    "posts": [],
+    "posts": [
+      {
+        "id": "a0cd00cd-090a-4b04-b0c4-53455105f4f0",
+        "author": "Juan Hamzah",
+        "timestamp": "2026-08-15T10:00:29.587Z",
+        "content": "can't stop romanticizing pain pain and failure lol",
+        "image": "",
+        "likes": 0
+      }
+    ],
     "location": "Bekasi, ID",
     "socialLinks": [
       {
         "platform": "Instagram",
         "url": "https://www.instagram.com/hamzahjuan__",
         "label": "hamzahjuan__"
+      },
+      {
+        "platform": "Discord",
+        "url": "https://discord.com/users/345095989209595904",
+        "label": "@Sashimi___"
       }
     ],
     "heroBadge": "Oh Hello there",
     "vibe": "BzzZzzzz",
-    "currentStatus": "ACAD Nitehunter"
+    "currentStatus": "ACAD Nitehunter",
+    "quote": {
+      "text": "Ah, I see it now.\nThe feeling is like the color in a painting.\nOnce it’s gone, all they’ve left behind is a rough sketch.",
+      "author": "H"
+    },
+    "musicSubtitle": "Catharsis.",
+    "quotes": [
+      {
+        "text": "Ah, I see it now.\nThey were beautiful 'cause of the feeling we had for them.\nOnce it's gone, it leaves only a rough sketch behind.",
+        "author": "H"
+      },
+      {
+        "text": "Suffering's just a piece of the tale,\nThe world finds joy to see us fail.\nWe are human, nothing grand,\nSo cherish what's still in hand.",
+        "author": "Mawih"
+      }
+    ]
   },
   "professional": {
     "name": "Juan Hamzah",
-    "title": "Looking for a job",
-    "tagline": "You will arrived only when you moving ",
+    "title": "AI (LLM) System Engineer | PLC Ladder Programmer | IoT & Embedded System Engineer",
+    "tagline": "Passionate about growth, innovation, and meaningful work. I’m always learning, embracing new challenges, and looking for opportunities to create value, build strong connections, and make a positive impact.",
     "available": true,
     "focusAreas": [
       "AI System Engineer",
       "AI Analyst",
       "PLC Programmer",
-      "IoT & Embedded System Engineering"
+      "IoT & Embedded System Engineering",
+      "Data Annotator"
     ],
-    "projects": [],
+    "projects": [
+      {
+        "id": "proj-04",
+        "name": "ACAD Nitehunter (Work in Progress)(Private Access)",
+        "shortDescription": "EDA Adaptation for Software Engineering",
+        "description": "TBD",
+        "tech": [],
+        "githubUrl": "",
+        "liveUrl": ""
+      },
+      {
+        "id": "5c4ad2e5-ab49-4df1-9954-cda3c251b664",
+        "name": "Crowd OS (Work in Progress) (Private Access)",
+        "shortDescription": "",
+        "description": "",
+        "tech": [],
+        "githubUrl": "",
+        "liveUrl": "",
+        "thumbnailUrl": ""
+      }
+    ],
     "contact": {
       "email": "juanhamzah@gmail.com",
       "linkedin": "https://www.linkedin.com/in/juanhamzah",

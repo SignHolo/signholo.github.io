@@ -3,23 +3,20 @@ import { useReveal } from "../../hooks/useReveal"
 import { useContent } from "../../hooks/useContent"
 import { useTypewriter } from "../../hooks/useTypewriter"
 import Seal from "../../components/Seal"
-import PostModal from "../../components/PostModal"
 import styles from "./personal.module.css"
 
 export default function PersonalSections() {
   const { content } = useContent()
   const p = content.personal
   const { text, caret } = useTypewriter(p.taglines)
-  const [postModalOpen, setPostModalOpen] = useState(false)
 
   const aboutReveal = useReveal()
   const quoteReveal = useReveal()
   const hobbiesReveal = useReveal()
   const musicReveal = useReveal()
 
-  const quoteData = typeof p.quote === "object" && p.quote !== null ? p.quote : {}
-  const quoteText = quoteData.text || p.quoteText || (typeof p.quote === "string" ? p.quote : "")
-  const quoteAuthor = quoteData.author || p.quoteAuthor || p.quoteSource || ""
+  const rawQuotes = p.quotes || (p.quote ? [typeof p.quote === "object" ? p.quote : { text: p.quote, author: p.quoteAuthor || "" }] : [])
+  const quotesList = (Array.isArray(rawQuotes) ? rawQuotes : []).filter((q) => q && (q.text || q.author))
 
   const userFacts = (p.facts || []).filter((f) => f && (f.label || f.value))
   const factItems = userFacts.length > 0
@@ -62,15 +59,6 @@ export default function PersonalSections() {
                 </svg>
                 <span>Read Personal Feed</span>
               </a>
-
-              <button
-                type="button"
-                className={styles.secondaryOutlineBtn}
-                onClick={() => setPostModalOpen(true)}
-              >
-                <span className={styles.plusIcon}>+</span>
-                <span>Add Post</span>
-              </button>
             </div>
           </div>
 
@@ -133,28 +121,44 @@ export default function PersonalSections() {
         </div>
       </section>
 
-      {/* ── Quote ── */}
-      {quoteText ? (
+      {/* ── Quotes ── */}
+      {quotesList.length > 0 && (
         <section ref={quoteReveal.ref} data-reveal={quoteReveal.revealed} className={styles.block}>
           <div className={styles.sectionHeaderLine}>
-            <h2 className={styles.serifHeading}>Quote</h2>
+            <h2 className={styles.serifHeading}>
+              {quotesList.length > 1 ? "Quotes" : "Quote"}
+            </h2>
             <div className={styles.headerRule} />
           </div>
 
-          <div className={styles.quoteCard}>
-            <div className={styles.quoteMark}>“</div>
-            <div className={styles.quoteBody}>
-              <p className={styles.quoteText}>{quoteText}</p>
-            </div>
-            {quoteAuthor ? (
-              <div className={styles.quoteAuthorRow}>
-                <span className={styles.quoteDash}>—</span>
-                <span className={styles.quoteAuthor}>{quoteAuthor}</span>
+          <div
+            className={quotesList.length > 1 ? styles.quotesGrid : styles.singleQuoteWrap}
+            data-reveal-stagger={quoteReveal.revealed}
+          >
+            {quotesList.map((q, idx) => (
+              <div key={idx} className={styles.quoteCard}>
+                <div className={styles.quoteMark}>“</div>
+                <div className={styles.quoteBody}>
+                  {(q.text || "")
+                    .split(/\n\s*\n/)
+                    .filter(Boolean)
+                    .map((para, pIdx) => (
+                      <p key={pIdx} className={styles.quoteText}>
+                        {para}
+                      </p>
+                    ))}
+                </div>
+                {q.author ? (
+                  <div className={styles.quoteAuthorRow}>
+                    <span className={styles.quoteDash}>—</span>
+                    <span className={styles.quoteAuthor}>{q.author}</span>
+                  </div>
+                ) : null}
               </div>
-            ) : null}
+            ))}
           </div>
         </section>
-      ) : null}
+      )}
 
       {/* ── Hobbies ── */}
       <section ref={hobbiesReveal.ref} data-reveal={hobbiesReveal.revealed} className={styles.block}>
@@ -195,29 +199,7 @@ export default function PersonalSections() {
 
         <div className={styles.musicGrid} data-reveal-stagger={musicReveal.revealed}>
           {p.music.map((entry, i) => (
-            <figure key={i} className={styles.musicTile}>
-              <div className={styles.coverWrap}>
-                <AlbumCover entry={entry} />
-                <span className={styles.genreTag}>
-                  {entry.genre || "Ambient / Chillwave"}
-                </span>
-              </div>
-              <figcaption className={styles.tileCaption}>
-                <h3 className={styles.albumTitle}>{entry.album}</h3>
-                <p className={styles.artistName}>{entry.artist}</p>
-                <a
-                  href={entry.spotifyUrl || `https://open.spotify.com/search/${encodeURIComponent(entry.artist + " " + entry.album)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={styles.spotifyLink}
-                >
-                  <span>Listen on Spotify</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-              </figcaption>
-            </figure>
+            <MusicTile key={i} entry={entry} />
           ))}
           {p.music.length === 0 && (
             <div className={styles.emptyState}>
@@ -248,12 +230,6 @@ export default function PersonalSections() {
           </div>
         </section>
       )}
-
-      <PostModal
-        open={postModalOpen}
-        onClose={() => setPostModalOpen(false)}
-        world="personal"
-      />
     </>
   )
 }
@@ -267,5 +243,107 @@ function AlbumCover({ entry }) {
       <span className={styles.coverLetter}>{(entry.artist || "A").trim().charAt(0).toUpperCase()}</span>
       <span className={styles.coverSpark}>✦</span>
     </div>
+  )
+}
+
+function getSpotifyEmbedUrl(url) {
+  if (!url) return null
+  try {
+    const match = url.match(/open\.spotify\.com\/(track|album|playlist|artist)\/([a-zA-Z0-9]+)/)
+    if (match) {
+      const type = match[1]
+      const id = match[2]
+      return `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&theme=0`
+    }
+    if (url.includes("open.spotify.com/embed/")) {
+      return url
+    }
+  } catch (e) {}
+  return null
+}
+
+function MusicTile({ entry }) {
+  const [playing, setPlaying] = useState(false)
+  const embedUrl = getSpotifyEmbedUrl(entry.spotifyUrl)
+
+  return (
+    <figure className={`${styles.musicTile} ${playing ? styles.musicTileActive : ""}`}>
+      <div className={styles.coverWrap}>
+        <AlbumCover entry={entry} />
+        <span className={styles.genreTag}>
+          {entry.genre || "Ambient / Chillwave"}
+        </span>
+
+        {embedUrl ? (
+          <button
+            type="button"
+            className={`${styles.playOverlayBtn} ${playing ? styles.playOverlayActive : ""}`}
+            onClick={() => setPlaying(!playing)}
+            aria-label={playing ? "Close player" : `Play ${entry.album} by ${entry.artist}`}
+          >
+            {playing ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+              </svg>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </button>
+        ) : null}
+      </div>
+
+      <figcaption className={styles.tileCaption}>
+        <h3 className={styles.albumTitle}>{entry.album}</h3>
+        <p className={styles.artistName}>{entry.artist}</p>
+
+        <div className={styles.musicCardActions}>
+          {embedUrl ? (
+            <button
+              type="button"
+              className={`${styles.playSongBtn} ${playing ? styles.playSongBtnActive : ""}`}
+              onClick={() => setPlaying(!playing)}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                {playing ? (
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                ) : (
+                  <path d="M8 5v14l11-7z" />
+                )}
+              </svg>
+              <span>{playing ? "Close Player" : "Play Song"}</span>
+            </button>
+          ) : null}
+
+          <a
+            href={entry.spotifyUrl || `https://open.spotify.com/search/${encodeURIComponent((entry.artist || "") + " " + (entry.album || ""))}`}
+            target="_blank"
+            rel="noreferrer"
+            className={styles.spotifyLink}
+          >
+            <span>Spotify</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        </div>
+
+        {playing && embedUrl ? (
+          <div className={styles.embedContainer}>
+            <iframe
+              src={embedUrl}
+              width="100%"
+              height="80"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              title={`Spotify player for ${entry.album}`}
+            />
+          </div>
+        ) : null}
+      </figcaption>
+    </figure>
   )
 }
